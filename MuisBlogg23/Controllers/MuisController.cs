@@ -18,14 +18,15 @@ namespace MuisBlogg23.Controllers
         }
 
         [HttpGet]
-        public async Task Getall()
+        public async Task<List<Muis>> GetAll()
         {
-            await _muis.Find(_ => true).ToListAsync();
+            List<Muis> foundMuisar = await _muis.Find(_ => true).ToListAsync();
+            return foundMuisar;
 
         }
 
         [HttpPost]
-        public async Task createMuisPost(Muis muis)
+        public async Task CreateMuisPost(Muis muis)
         {
             await _muis.InsertOneAsync(muis);
           
