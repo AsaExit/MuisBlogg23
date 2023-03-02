@@ -30,7 +30,32 @@ namespace MuisBlogg23.Controllers
         {
             await _muis.InsertOneAsync(muis);
           
-        } 
+        }
+
+        [HttpPost("MUISACTION!!!!!")]
+        public async Task<MuisDoingStuff> MuisAction(string id)
+        {
+            Muis muis = await _muis.Find(m => m.Id == id).FirstOrDefaultAsync();
+
+            string action = Random.Shared.Next(5) switch
+            {
+                0 => $"{muis.Namn} rolls around in the green grass",
+                < 1 => $"{muis.Namn} licks the fence",
+                < 2 => $"{muis.Namn} smells the flowers",
+                < 3 => $"{muis.Namn} falls asleep on its back",
+                < 4 => $"{muis.Namn} jumps around!",
+                < 5 => $"{muis.Namn} says MU!",
+                _ => "MUIS ERROR"
+            };
+
+            return new MuisDoingStuff()
+            {
+                MuisName = muis.Namn,
+                MuisAction = action,
+            };
+
+        }
+
     }
 
  

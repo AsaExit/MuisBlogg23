@@ -7,7 +7,7 @@ namespace MuisBlogg23.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        private string Id { get; set; }
+        public string Id { get; set; }
         public string Namn { get; set; }
         public string CowType { get; private set; } = Random.Shared.Next(12) switch
         {
@@ -25,7 +25,13 @@ namespace MuisBlogg23.Models
             < 11 => "Svensk Jersey-boskap",
             < 12 => "SUPER MUIS",
             _=>"SOMETHING WRONG ERROR ERROR"
-        };
+        };       
+    }
+
+    public class MuisDoingStuff
+    {
+        public string MuisName { get; set; }
+        public string MuisAction { get; set; }
     }
 
 }
