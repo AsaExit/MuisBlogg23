@@ -1,0 +1,307 @@
+using System;
+
+namespace MuisGenerator
+{
+    public class Muis
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Breed { get; set; }
+        public double Weight { get; set; }
+        public int Health { get; set; }
+        public int Happiness { get; set; }
+        private Random random = new Random();
+
+        // Added a constructor that generates a random name, age, breed and weight for the muis
+        public Muis()
+        {
+            string[] names = { "Mooey", "Bessie", "Daisy", "Buttercup", "Spot" };
+            string[] breeds = { "Holstein", "Jersey", "Angus", "Hereford", "Simmental" };
+            Name = names[random.Next(names.Length)];
+            Age = random.Next(1, 10);
+            Breed = breeds[random.Next(breeds.Length)];
+            Weight = random.Next(300, 800);
+            Health = 100;
+            Happiness = 100;
+        }
+
+        // Added a parameterless constructor that calls the other constructor with default values
+        public Muis(string name, int age, string breed, double weight) : this()
+        {
+            Name = name;
+            Age = age;
+            Breed = breed;
+            Weight = weight;
+        }
+
+        // Added some sound effects and expressions to the moo method
+        public void Moo()
+        {
+            string[] sounds = { "Moo!", "Mooo!", "Mooooo!", "Moooooo!" };
+            string[] expressions = { "happily", "sadly", "angrily", "curiously" };
+            Console.WriteLine($"{Name} says {sounds[random.Next(sounds.Length)]} {expressions[random.Next(expressions.Length)]}.");
+            Happiness -= 1;
+        }
+
+        // Added some conditions to check if the muis is full or hungry before eating
+        // Added some feedback on how the food tastes and affects the muis's health and happiness
+        // Added some limits to prevent the health and happiness from exceeding 100 or falling below 0
+        public void Eat(double amount)
+        {
+            if (Weight > 500)
+            {
+                Console.WriteLine($"{Name} is full and does not want to eat more.");
+                Happiness -= 5;
+            }
+            else if (Weight < 300)
+            {
+                Console.WriteLine($"{Name} is hungry and needs more food.");
+                Happiness -= 10;
+            }
+            else
+            {
+                Weight += amount * 0.1;
+                Health += 10;
+                Happiness += 5;
+
+                if (Health > 100) Health = 100;
+                if (Happiness > 100) Happiness = 100;
+
+                string[] foods = { "grass", "hay", "corn", "carrots" };
+                string[] tastes = { "delicious", "yummy", "tasty", "sweet" };
+                Console.WriteLine($"{Name} ate {amount} kg of {foods[random.Next(foods.Length)]} and it was {tastes[random.Next(tastes.Length)]}. {Name} now weighs {Weight} kg.");
+            }
+        }
+
+        // Added some variations to the sleep method depending on the time of day
+        // Added some dreams that the muis might have while sleeping
+        public void Sleep()
+        {
+            DateTime now = DateTime.Now;
+
+            if (now.Hour >= 6 && now.Hour < 18)
+            {
+                Console.WriteLine($"{Name} is taking a nap in the shade.");
+                Health += 2;
+                Happiness += 2;
+
+                if (Health > 100) Health = 100;
+                if (Happiness > 100) Happiness = 100;
+
+                string[] dreams = { "running in a field of flowers", "meeting a handsome bull", "winning a blue ribbon at a fair", "being milked by a friendly farmer" };
+                Console.WriteLine($"While sleeping,{Name} dreams of{dreams[random.Next(dreams.Length)]}.");
+
+            }
+            else
+            {
+                Console.WriteLine($"{Name} is sleeping soundly under the stars.");
+                Health += 5;
+                Happiness += 5;
+
+                if (Health > 100) Health = 100;
+                if (Happiness > 100) Happiness = 100;
+
+                string[] dreams = { "flying over the clouds", "exploring a new land", "having a party with other muissar", "saving the world from aliens" };
+                Console.WriteLine($"While sleeping,{Name} dreams of{dreams[random.Next(dreams.Length)]}.");
+
+            }
+        }
+
+        // Added some obstacles and dangers that the muis might encounter while romaing
+        // Added some rewards and penalties for the muis’s health and happiness depending on the outcome of roaming
+        public void Roam()
+        {
+            int x = random.Next(-10, 11);
+            int y = random.Next(-10, 11);
+            Console.WriteLine($"{Name} roamed to position({x}, {y}).");
+            string[] obstacles = { "a fence", "a river", "a rock", "a tree" };
+            string[] dangers = { "a wolf", "a hunter", "a trap", "a storm" };
+            string[] rewards = { "a flower", "a butterfly", "a friend", "a treat" };
+            int chance = random.Next(100);
+
+            if (chance < 10)
+            {
+                Console.WriteLine($"{Name} encountered {obstacles[random.Next(obstacles.Length)]} and got stuck.");
+                Health -= 10;
+                Happiness -= 20;
+
+                if (Health < 0) Health = 0;
+                if (Happiness < 0) Happiness = 0;
+            }
+            else if (chance < 20)
+            {
+                Console.WriteLine($"{Name} encountered {dangers[random.Next(dangers.Length)]} and got scared.");
+                Health -= 20;
+                Happiness -= 30;
+
+                if (Health < 0) Health = 0;
+                if (Happiness < 0) Happiness = 0;
+            }
+            else if (chance > 80)
+            {
+                Console.WriteLine($"{Name} encountered {rewards[random.Next(rewards.Length)]} and got happy.");
+                Health += 10;
+                Happiness += 20;
+
+                if (Health > 100) Health = 100;
+                if (Happiness > 100) Happiness = 100;
+            }
+        }
+        // Added some compliments and insults that the muis might say to another muis when greeting
+        public void Greet(Muis other)
+        {
+            Console.WriteLine($"{Name} greets {other.Name}.");
+
+            string[] compliments = { "You look lovely today.", "You have a nice moo.", "You are very smart.", "You are very brave." };
+            string[] insults = { "You smell bad.", "You have a silly moo.", "You are very dumb.", "You are very cowardly." };
+
+            int mood = Happiness - other.Happiness;
+
+            if (mood > 50)
+            {
+                Console.WriteLine($"{Name} says to {other.Name}: {compliments[random.Next(compliments.Length)]}");
+                Happiness += 5;
+                other.Happiness += 5;
+            }
+            else if (mood < -50)
+            {
+                Console.WriteLine($"{Name} says to {other.Name}: {insults[random.Next(insults.Length)]}");
+                Happiness -= 5;
+                other.Happiness -= 5;
+            }
+
+            if (Happiness > 100) Happiness = 100;
+            if (Happiness < 0) Happiness = 0;
+
+            if (other.Happiness > 100) other.Happiness = 100;
+            if (other.Happiness < 0) other.Happiness = 0;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Create a list of muissar using the random constructor
+            List<Muis> muissar = new List<Muis>();
+            for (int i = 0; i < 10; i++)
+            {
+                muissar.Add(new Muis());
+            }
+
+            // Display the details of each muis
+            Console.WriteLine("Welcome to the Muis Simulator!");
+            Console.WriteLine("Here are the muissar in the farm:");
+            foreach (Muis m in muissar)
+            {
+                Console.WriteLine($"Name: {m.Name}, Age: {m.Age}, Breed: {m.Breed}, Weight: {m.Weight}");
+            }
+
+            // Create a loop to simulate one day in the farm
+            bool quit = false;
+            while (!quit)
+            {
+                // Display the menu options for each muis
+                Console.WriteLine("\nWhat do you want to do with each muis?");
+                Console.WriteLine("1. Moo");
+                Console.WriteLine("2. Eat");
+                Console.WriteLine("3. Sleep");
+                Console.WriteLine("4. Roam");
+                Console.WriteLine("5. Greet another muis");
+                Console.WriteLine("6. Quit");
+
+                // Get the user input and validate it
+                int choice = 0;
+                bool valid = false;
+                while (!valid)
+                {
+                    try
+                    {
+                        choice = int.Parse(Console.ReadLine());
+                        if (choice >= 1 && choice <= 6)
+                        {
+                            valid = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please enter a number between 1 and 6.");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number between 1 and 6.");
+                    }
+                }
+
+                // Perform the action based on the user input for each muis 
+                switch (choice)
+                {
+                    case 1:
+                        foreach (Muis m in muissar)
+                        {
+                            m.Moo();
+                        }
+                        break;
+
+                    case 2:
+                        foreach (Muis m in muissar)
+                        {
+                            double amount = Random.Shared.Next(1, 11); // Generate a random amount of food for each muis to eat
+                            m.Eat(amount);
+                        }
+                        break;
+
+                    case 3:
+                        foreach (Muis m in muissar)
+                        {
+                            m.Sleep();
+                        }
+                        break;
+
+                    case 4:
+                        foreach (Muis m in muissar)
+                        {
+                            m.Roam();
+                        }
+                        break;
+
+                    case 5:
+                        foreach (Muis m in muissar)
+                        {
+                            // Pick a random muis to greet from the list
+                            int index = Random.Shared.Next(muissar.Count);
+                            Muis other = muissar[index];
+                            // Make sure the muis does not greet itself
+                            while (other == m)
+                            {
+                                index = Random.Shared.Next(muissar.Count);
+                                other = muissar[index];
+                            }
+                            m.Greet(other);
+                        }
+                        break;
+
+                    case 6:
+                        quit = true;
+                        Console.WriteLine("Thank you for playing the Muis Simulator!");
+                        break;
+                }
+
+            }
+
+
+
+
+            // Display the health and happiness of each muis after each action
+            Console.WriteLine("\nHere are the health and happiness of each muis:");
+            foreach (Muis m in muissar)
+            {
+                Console.WriteLine($"Name: {m.Name}, Health: {m.Health}, Happiness: {m.Happiness}");
+            }
+        }
+    }
+}
+
+
+
+
+
