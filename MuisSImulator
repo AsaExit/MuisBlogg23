@@ -176,6 +176,30 @@ namespace MuisGenerator
             if (other.Happiness > 100) other.Happiness = 100;
             if (other.Happiness < 0) other.Happiness = 0;
         }
+        public void Draw()
+        {
+            Console.WriteLine(@"              (      )
+              ~(^^^^)~
+               ) @@ \~_          |\
+              /     | \        \~ /
+             ( 0  0  ) \        | |
+              ---___/~  \       | |
+               /'__/ |   ~-_____/ |
+o          _   ~----~      ___---~
+  O       //     |         |
+         ((~\  _|         -|
+   o  O //-_ \/ |        ~  |
+        ^   \_ /         ~  |
+               |          ~ |
+               |     /     ~ |
+               |     (       |
+                \     \      /\
+               / -_____-\   \ ~~-*
+               |  /       \  \
+               / /         / /
+             /~  |       /~  |
+             ~~~~        ~~~~");
+        }
     }
     class Program
     {
@@ -207,7 +231,8 @@ namespace MuisGenerator
                 Console.WriteLine("3. Sleep");
                 Console.WriteLine("4. Roam");
                 Console.WriteLine("5. Greet another muis");
-                Console.WriteLine("6. Quit");
+                Console.WriteLine("6. Muis Art");
+                Console.WriteLine("7. End");
 
                 // Get the user input and validate it
                 int choice = 0;
@@ -281,6 +306,13 @@ namespace MuisGenerator
                         break;
 
                     case 6:
+                        foreach (Muis m in muissar)
+                        {
+                            m.Draw();
+                        }
+                        break;
+
+                    case 7:
                         quit = true;
                         Console.WriteLine("Thank you for playing the Muis Simulator!");
                         break;
