@@ -337,3 +337,126 @@ o          _   ~----~      ___---~
 
 
 
+// ===========================================================================================================================================================
+// First code project example
+
+
+
+
+using System;
+
+namespace Tamagotchi
+{
+    class Muis
+    {
+        // Attributes
+        public string Name { get; set; }
+        public int Hunger { get; set; }
+        public int Happiness { get; set; }
+
+        // Constructor
+        public Muis(string name)
+        {
+            Name = name;
+            Hunger = 50;
+            Happiness = 50;
+        }
+
+        // Methods
+        public void Feed()
+        {
+            Console.WriteLine($"{Name} eats some food.");
+            Hunger -= 10;
+            if (Hunger < 0) Hunger = 0;
+            Happiness += 5;
+            if (Happiness > 100) Happiness = 100;
+        }
+
+        public void Play()
+        {
+            Console.WriteLine($"{Name} plays with you.");
+            Hunger += 10;
+            if (Hunger > 100) Hunger = 100;
+            Happiness += 10;
+            if (Happiness > 100) Happiness = 100;
+        }
+
+        public void Sleep()
+        {
+            Console.WriteLine($"{Name} goes to sleep.");
+            Hunger += 20;
+            if (Hunger > 100) Hunger = 100;
+            Happiness -= 10;
+            if (Happiness < 0) Happiness = 0;
+        }
+
+        public void Status()
+        {
+            Console.WriteLine($"Name: {Name}");
+            Console.WriteLine($"Hunger: {Hunger}");
+            Console.WriteLine($"Happiness: {Happiness}");
+        }
+
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Create a muis tamagotchi object
+            Console.WriteLine("Welcome to Muis Tamagotchi!");
+            Console.Write("Enter a name for your pet: ");
+            string name = Console.ReadLine();
+            Muis pet = new Muis(name);
+
+            // Display a menu of options
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("\nWhat do you want to do with your pet?");
+                Console.WriteLine("1. Feed");
+                Console.WriteLine("2. Play");
+                Console.WriteLine("3. Sleep");
+                Console.WriteLine("4. Status");
+                Console.WriteLine("5. Exit");
+                Console.Write("Enter your choice: ");
+                int choice = int.Parse(Console.ReadLine());
+
+                // Perform the action based on the choice
+                switch (choice)
+                {
+                    case 1:
+                        pet.Feed();
+                        break;
+                    case 2:
+                        pet.Play();
+                        break;
+                    case 3:
+                        pet.Sleep();
+                        break;
+                    case 4:
+                        pet.Status();
+                        break;
+                    case 5:
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice.");
+                        break;
+                }
+            }
+        }
+    }
+}
+                        
+
+
+
+
+
+
+
+
+
+
+
+
